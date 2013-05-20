@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript">
+$("document").ready(function(){
+
+//----------------------------------------CONFIG--------------------------------------------------------------
+
+var resetNum = 0;//FOR RESET PURPOSE
+var itemRightMargin = 10;//YOUR MARGIN VALUE
+var itemWidth = 100;//WIDTH OF YOUR IMAGES, NOT INCLUDING M/P
+var animationSpeed = 6000;//MEASURED IN MS - 1000 = 1 SECOND
+
+//----------------------------------------END CONFIG----------------------------------------------------------
+
+
+
+$('.w-slides .first').clone().appendTo('.w-slides').removeClass('first').addClass('last');
+
+var clipWidth = (itemRightMargin+itemWidth)*$('.w-slides li').length;
+var containerWidth = clipWidth-itemRightMargin;
+var clipCapacity = $('.w-slides li').length;
+var animation = (containerWidth*-1)+itemWidth;
+
+//SET THE STRUCTURE
+$('.w-slideshow').css('width', itemWidth);
+$('.w-multi').css('width', containerWidth);
+$('.w-slides').css('width', clipWidth);
+$('.w-slides li').css({'float':'left', 'width':itemWidth, 'margin-right':itemRightMargin+'px'});
+
+$('.w-slides li:last').css('margin-right', 0);
+$('.w-slideshow, .w-multi').css({'padding':resetNum});
+$('.w-multi').css({'margin':resetNum});
+function animateMe(){
+$('.w-multi').animate({left:animation}, animationSpeed, "linear", function()
+	{
+		$('.w-multi').css('left', 0);
+		animateMe();
+	});
+}
+
+animateMe();
+
+});
+
+</script>
+<style>
+div{margin:10px; padding:10px;}
+ul{margin:0; padding:0;}
+li{list-style:none;}
+img{display:block; background:none #333; border:none;}
+
+.w-slideshow{position:relative; height:100px; overflow:hidden; margin:0 auto;}
+.w-multi{position:absolute; top:0; left:0;}
+.w-slides{height:120px; float:left; margin:0 10px 0 0;}
+
+.removeMargin{margin-right:0!important;}
+.w-slides li
+	{
+		width:100px;
+	}
+
+.removeMargin{margin-right:0!important;}
+
+.victory-tune{visibility:hidden;}
+
+</style>
+<title>Rotator - Straight, No Hover</title>
+</head>
+
+<body>
+<div>
+	<div class="w-slideshow">
+        <div class="w-multi">
+		<ul class="w-slides">
+            <li class="first"><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-1.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-2.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-3.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-4.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-5.jpg" /></a></li>
+		</ul>
+        </div>
+	</div>
+</div>
+</body>
+</html>
