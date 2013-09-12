@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="css/styles.css" rel="stylesheet" type="text/css" media="screen">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+(function ($){
+	$.fn.sponsorScroller = 
+		function(options){
+		
+		var defaults = {
+			itemRightMargin: 10,
+			itemWidth: 200,
+			animationSpeed: 11000,
+			animationStatus: true
+		};
+		//MERGE THE OPTIONS INTO THE DEFAULTS OBJECT, THE DEFAULTS WILL NEED TO BE LISTED TO BE KNOWN...
+		var options = $.extend(defaults, options);
+		var resetNum = 0;
+
+		
+$(this).toggleClass('js-disabled js-enabled');
+
+var firstItem = $(this).find('.w-slides .first').toggleClass('thisFirstItem');
+var thisChild = $(this).find('.w-multi').children();
+
+$(firstItem).clone().appendTo(thisChild).toggleClass('first').addClass('last');
+$(this).find('.thisFirstItem').toggleClass('thisFirstItem');
+
+var clipWidth = (defaults.itemRightMargin+defaults.itemWidth)*$(this).find('.w-slides li').length;
+var containerWidth = clipWidth-defaults.itemRightMargin;
+var clipCapacity = $(this).find('.w-slides li').length;
+var animation = (containerWidth*-1)+defaults.itemWidth;
+var speed = Math.abs(animation / defaults.animationSpeed);
+
+//SET THE STRUCTURE
+$(this).css('width', defaults.itemWidth);
+$(this).find('.w-multi').css('width', containerWidth);
+$(this).find('.w-slides').css('width', clipWidth);
+$(this).find('.w-slides li').css({'float':'left', 'width':defaults.itemWidth, 'margin-right':defaults.itemRightMargin+'px'});
+
+$(this).find('.w-slides li:last').css('margin-right', 0);
+$(this).css({'padding':resetNum});
+$(this).find('.w-multi').css({'padding':resetNum});
+$(this).find('.w-multi').css({'margin':resetNum});
+
+var animationWrapper = $(this).find('.w-multi'); //R ObjObj
+var thisWidget = $(this);
+
+function animateMe(){
+	var distance = Math.abs(animation - animationWrapper.position().left);
+	var time = distance / speed;
+
+$(thisWidget).find('.w-multi').animate({left:animation}, time, 'linear', function()
+	{
+		$(thisWidget).find('.w-multi').css('left', 0);	
+		animateMe();
+	});
+}
+
+$(thisWidget).find('.w-multi').hover(function(){
+		$(this).stop(true);
+},
+function(){
+		animateMe();	
+	});
+	
+animateMe();
+
+if(defaults.animationStatus === false){
+	$(thisWidget).find('.w-multi').stop(true);
+	$(thisWidget).find('.w-multi').hover(function(){
+			$(this).stop(true);
+	},
+	function(){
+			$(this).stop(true);
+		});
+}}}
+(jQuery));});
+</script>
+<script>
+/*
+YOUR COMMA SEPARATED OPTIONS HERE INCLUDE...
+itemWidth:number, 
+itemRightMargin:number
+animationStatus: boolean
+SET ANIMATION TO FALSE TO STOP THE ANIMATION - USEFUL FOR A SINGLE IMAGE WHILE PENDING MORE CONTENT
+PLEASE REMEMBER TO OMIT THE TRAILING COMMA AFTER THE LAST CONFIGURABLE...
+*/
+
+$(document).ready(function(){
+//var animationSpeed = 1000;
+	$('#sponsorScrollerOne').sponsorScroller({animationSpeed:2000, animationStatus:false});
+//var animationSpeed = 6000;
+	$('#sponsorScrollerTwo').sponsorScroller({animationSpeed:6000});	
+});
+</script>
+<style>
+div{margin:10px; padding:10px;}
+ul{margin:0; padding:0;}
+li{list-style:none;}
+img{display:block; background:none #333; border:none;}
+
+.w-slideshow{position:relative; height:100px; overflow:hidden; margin:0 auto;}
+.w-multi{position:absolute; top:0; left:0;}
+.w-slides{height:120px; float:left; margin:0 10px 0 0;}
+
+.removeMargin{margin-right:0!important;}
+.w-slides li{width:100px;}
+.removeMargin{margin-right:0!important;}
+.w-slideshow.js-disabled{overflow:visible; position:static;}
+.js-disabled li{margin-bottom:10px;}
+#sponsorScrollerTwo .w-multi{top:200px;}
+</style>
+<title>Rotator - Plugin - Config - Switch</title>
+</head>
+
+<body>
+<div>
+	<div class="w-slideshow js-disabled" id="sponsorScrollerOne">
+        <div class="w-multi">
+		<ul class="w-slides">
+			<!--
+			Local Path is images/xxx.jpg
+			-->
+            <li class="first"><a href="#"><img src="xmen-1.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-2.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-3.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-4.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-5.jpg" /></a></li>
+		</ul>
+        </div>
+
+	</div>
+	<div class="w-slideshow js-disabled" id="sponsorScrollerTwo">
+        <div class="w-multi">
+		<ul class="w-slides">
+            <li class="first"><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-1.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-2.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-3.jpg" /></a></li>
+			
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-4.jpg" /></a></li>
+			<li><a href="#"><img src="http://www.littleredplanedesign.com/labs/rotator/rotator-images/xmen-5.jpg" /></a></li>
+			<!---->
+		</ul>
+        </div>
+
+	</div>	
+
+	<!--<div id="queue" style="width:150px; margin:0 auto; margin-top:20px;">Num of items in queue = </div>-->
+</div>
+</body>
+</html>
